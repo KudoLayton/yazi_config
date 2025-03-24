@@ -1,0 +1,34 @@
+[opener]
+edit = [
+	{ run = 'nvim "%0"', block = true, for = "windows" }
+]
+
+open = [
+	{ run = 'start "" "%0"', orphan = true, desc = "Default Open"}
+]
+
+dir = [
+	{ run = 'nvim "%0"', block = true, desc = "Nvim - Oil" },
+	{ run = 'explorer "%0"', block = false, orphan = true, desc = "Windows Explorer" },
+	{ run = 'Code "%0"', block = false, orphan = true, desc = "VSCode" },
+	{ run = '"C:\Program Files\Bandizip\Bandizip" bc "%0"', block = false, orphan = true, desc = "Bandizip Compress"}
+]
+
+unzip = [
+	{ run = '"C:\Program Files\Bandizip\Bandizip" "%0"', orphan = true, desc = "Bandizip"},
+	{ run = '"C:\Program Files\Bandizip\Bandizip" bx -target:auto "%*"', orphan = true, desc = "Bandizip - Auto Extract"},
+	{ run = '"C:\Program Files\Bandizip\Bandizip" bx -target:name "%*"', orphan = true, desc = "Bandizip - Name Extract"},
+]
+
+[open]
+prepend_rules = [
+	{ name = "*.sln", use = ["open", "edit"] },
+	{ mime = "text/*", use = "edit" },
+	{ mime = "application/javascript", use = "edit" },
+	{ mime = "application/zip", use = "unzip" },
+	{ mime = "inode/directory", use = "dir" }
+]
+
+rules = [
+	{ name = "*", use = "open" }
+]
